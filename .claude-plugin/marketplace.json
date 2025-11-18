@@ -1,0 +1,17 @@
+{
+  "name": "choreo",
+  "owner": {
+    "name": "aliangm"
+  },
+  "metadata": {
+    "description": "Marketplace for the Choreo plugin"
+  },
+  "plugins": [
+    {
+      "name": "choreo",
+      "description": "Config-driven development workflow orchestrator for Claude Code",
+      "source": "./",
+      "version": "0.1.0"
+    }
+  ]
+}
