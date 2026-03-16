@@ -1,7 +1,7 @@
 {
   "name": "choreo",
   "description": "Config-driven development workflow orchestrator for Claude Code",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "author": {
     "name": "aliangm"
   }
