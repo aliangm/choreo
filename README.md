@@ -1,7 +1,5 @@
 # choreo
 
-**English** | [简体中文](./README.zh-CN.md) | [日本語](./README.ja.md) | [한국어](./README.ko.md) | [Français](./README.fr.md) | [Deutsch](./README.de.md) | [Español](./README.es.md)
-
 A Claude Code plugin that runs **config-driven development workflows** as a state machine. You declare stages, transitions, and inputs in a single `workflow.json`; the plugin's hooks and scripts drive the loop.
 
 Two modes:
@@ -11,14 +9,6 @@ Two modes:
 ## Quick Start
 
 ### Installation
-
-Run this command 
-
-```
-claude plugin marketplace add aliangm/choreo && claude plugin install choreo@choreo
-```
-
-Already installed? Update with:
 
 ```
 claude plugin marketplace update choreo && claude plugin update choreo@choreo
