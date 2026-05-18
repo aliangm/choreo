@@ -18,7 +18,7 @@
 安装插件（在 Claude Code 里）：
 
 ```
-/plugin marketplace add jie-worldstatelabs/choreo
+/plugin marketplace add aliangm/choreo
 /plugin install choreo
 ```
 

@@ -9,7 +9,7 @@
   "plugins": [
     {
       "name": "choreo",
-      "description": "Config-driven development workflow orchestrator for Claude Code",
+      "description": "Plan-Execute-Review development workflow with brainstorming, executor agent, and adversarial code review loop",
       "source": "./",
       "version": "1.0.6"
     }

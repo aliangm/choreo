@@ -15,7 +15,7 @@ Two modes:
 Run this command 
 
 ```
-claude plugin marketplace add jie-worldstatelabs/choreo && claude plugin install choreo@choreo
+claude plugin marketplace add aliangm/choreo && claude plugin install choreo@choreo
 ```
 
 Already installed? Update with:

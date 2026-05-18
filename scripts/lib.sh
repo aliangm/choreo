@@ -1807,7 +1807,7 @@ cloud_post_diff() {
   # Future work: expose `diff_exclude` in workflow.json for user overrides.
   # CRITICAL: `:(top)` magic anchors the pathspec to the repo root, not the
   # $proot passed to `git -C`. When project_root is a monorepo subdir (e.g.
-  # /Users/jie/code/snake2 within /Users/jie/code/.git), plain `:(exclude).omc`
+  # /Users/dev/code/snake2 within /Users/dev/code/.git), plain `:(exclude).omc`
   # would only match `snake2/.omc/`, missing the root-level `.omc/` that's
   # actually producing the noise. `:(top)` + `:(top,glob)` together cover
   # both the repo root and any nested occurrence.

@@ -1,0 +1,91 @@
+{
+  "initial_stage": "planning",
+  "terminal_stages": ["complete", "escalated", "cancelled"],
+  "max_epoch": 20,
+  "modifies_worktree": false,
+  "run_files": {
+    "setup_context": {
+      "description": "Caller context JSON: {mode:'create'|'edit', description:string, source_dir?:string, publish_intent:'cloud'|'local'}. SKILL.md exports CREATE_WORKFLOW_CONTEXT before invoking setup-workflow.sh; description is the user's original request (setup-workflow.sh has no positional slot for it); publish_intent mirrors --mode and gates the publishing stage.",
+      "init": "echo \"${CREATE_WORKFLOW_CONTEXT:-{\\\"mode\\\":\\\"create\\\",\\\"description\\\":\\\"\\\",\\\"publish_intent\\\":\\\"local\\\"}}\""
+    }
+  },
+  "stages": {
+    "planning": {
+      "interruptible": true,
+      "execution": { "type": "inline" },
+      "transitions": {
+        "approved": "writing"
+      },
+      "inputs": {
+        "required": [],
+        "optional": [
+          { "from_run_file": "setup_context", "description": "Create-vs-edit mode hint, description, and source_dir for edit" }
+        ]
+      }
+    },
+    "writing": {
+      "interruptible": false,
+      "execution": { "type": "subagent", "model": "opus" },
+      "transitions": {
+        "done": "validating"
+      },
+      "inputs": {
+        "required": [
+          { "from_stage": "planning", "description": "Approved design: suffix, target dir, stage decomposition, transition graph, inputs per stage" }
+        ],
+        "optional": [
+          { "from_stage": "validating", "description": "Validator report from the previous iteration — every ❌ line must be addressed in this pass" },
+          { "from_stage": "final_review", "description": "User feedback from the most recent publish round — incorporate every point as the highest-priority change list for this iteration" }
+        ]
+      }
+    },
+    "validating": {
+      "interruptible": false,
+      "execution": { "type": "inline" },
+      "transitions": {
+        "PASS": "publishing",
+        "FAIL": "writing"
+      },
+      "inputs": {
+        "required": [
+          { "from_stage": "writing", "description": "Writer report — absolute path to the workflow directory and list of files produced" }
+        ],
+        "optional": []
+      }
+    },
+    "publishing": {
+      "interruptible": false,
+      "execution": { "type": "inline" },
+      "transitions": {
+        "done": "final_review",
+        "skipped": "final_review"
+      },
+      "inputs": {
+        "required": [
+          { "from_stage": "writing", "description": "Writer report — target directory to publish" },
+          { "from_stage": "validating", "description": "Validator PASS confirmation" }
+        ],
+        "optional": [
+          { "from_run_file": "setup_context", "description": "publish_intent gates cloud vs skip" }
+        ]
+      }
+    },
+    "final_review": {
+      "interruptible": true,
+      "execution": { "type": "inline" },
+      "transitions": {
+        "approve": "complete",
+        "revise":  "writing"
+      },
+      "inputs": {
+        "required": [
+          { "from_stage": "publishing", "description": "Publish report — contains the hub URL (cloud) or skip notice (local) to surface to the user" },
+          { "from_stage": "writing",    "description": "Writer report — has the absolute target directory, useful in both modes" }
+        ],
+        "optional": [
+          { "from_run_file": "setup_context", "description": "publish_intent — drives whether the user message highlights the hub URL or the local path" }
+        ]
+      }
+    }
+  }
+}

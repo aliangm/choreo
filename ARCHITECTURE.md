@@ -391,10 +391,6 @@ Cloud mode mirrors every workflow file to the hosted webapp so you can watch pro
 3. On match with a different absolute path: `project_root` auto-updates so `git diff` uses the right working copy
 4. On mismatch: exits with a clear error (`--force-project-mismatch` overrides)
 
-### Deep dive
-
-The **[workflowUI README](https://github.com/jie-worldstatelabs/workflowUI)** has the full cloud architecture: write-through mirror table, SSE via Postgres LISTEN/NOTIFY, cross-machine protocol, API reference, database schema, server-operator deploy guide, and troubleshooting.
-
 ---
 
 ## Design Rationale

@@ -197,5 +197,3 @@ if [[ "$(get_awaiting_user "$STATE_FILE" 2>/dev/null)" == "true" ]]; then
 fi
 
 exit 0
-
-# finished-event post is synchronous to survive subagent teardown
